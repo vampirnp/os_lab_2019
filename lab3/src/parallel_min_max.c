@@ -40,24 +40,30 @@ int main(int argc, char **argv) {
         switch (option_index) {
           case 0:
             seed = atoi(optarg);
-            // your code here
-            // error handling
+            if (seed <= 0) {
+              printf("Seed must be a positive number\n");
+              return 1;
+            }
             break;
           case 1:
             array_size = atoi(optarg);
-            // your code here
-            // error handling
+            if (array_size <= 0) {
+              printf("Array size must be a positive number\n");
+              return 1;
+            }
             break;
           case 2:
             pnum = atoi(optarg);
-            // your code here
-            // error handling
+            if (pnum <= 0) {
+              printf("Number of processes must be a positive number\n");
+              return 1;
+            }
             break;
           case 3:
             with_files = true;
             break;
 
-          defalut:
+          default:
             printf("Index %d is out of options\n", option_index);
         }
         break;
@@ -98,17 +104,35 @@ int main(int argc, char **argv) {
       active_child_processes += 1;
       if (child_pid == 0) {
         // child process
-
-        // parallel somehow
-
         if (with_files) {
-          // use files here
+          int start = i * array_size / pnum;
+          int end = (i + 1) * array_size / pnum;
+          struct MinMax child_min_max = GetMinMax(array, start, end);
+
+          char filename[256];
+          snprintf(filename, sizeof(filename), "child_%d.txt", i);
+          FILE *fp = fopen(filename, "w");
+          if (fp == NULL) {
+            printf("Error opening file for writing\n");
+            return 1;
+          }
+          fprintf(fp, "%d %d", child_min_max.min, child_min_max.max);
+          fclose(fp);
         } else {
-          // use pipe here
+          int pipefd[2];
+          if (pipe(pipefd) == -1) {
+            printf("Pipe failed\n");
+            return 1;
+          }
+          close(pipefd[0]); // close read end of the pipe
+          int start = i * array_size / pnum;
+          int end = (i + 1) * array_size / pnum;
+          struct MinMax child_min_max = GetMinMax(array, start, end);
+          write(pipefd[1], &child_min_max, sizeof(child_min_max));
+          close(pipefd[1]); // close write end of the pipe
         }
         return 0;
       }
-
     } else {
       printf("Fork failed!\n");
       return 1;
@@ -116,8 +140,7 @@ int main(int argc, char **argv) {
   }
 
   while (active_child_processes > 0) {
-    // your code here
-
+    wait(NULL);
     active_child_processes -= 1;
   }
 
@@ -130,9 +153,39 @@ int main(int argc, char **argv) {
     int max = INT_MIN;
 
     if (with_files) {
-      // read from files
+      char filename[256];
+      snprintf(filename, sizeof(filename), "child_%d.txt", i);
+      FILE *fp = fopen(filename, "r");
+      if (fp == NULL) {
+        printf("Error opening file for reading\n");
+        return 1;
+      }
+      fscanf(fp, "%d %d", &min, &max);
+      fclose(fp);
     } else {
-      // read from pipes
+      int pipefd[2];
+      if (pipe(pipefd) == -1) {
+        printf("Pipe failed\n");
+        return 1;
+      }
+      pid_t child_pid = fork();
+      if (child_pid == 0) {
+        // child process
+        close(pipefd[1]); // close write end of the pipe
+        struct MinMax child_min_max;
+        read(pipefd[0], &child_min_max, sizeof(child_min_max));
+        close(pipefd[0]); // close read end of the pipe
+        min = child_min_max.min;
+        max = child_min_max.max;
+        return 0;
+      }
+      close(pipefd[0]); // close read end of the pipe
+      struct MinMax child_min_max;
+      read(pipefd[1], &child_min_max, sizeof(child_min_max));
+      close(pipefd[1]); // close write end of the pipe
+      wait(NULL);
+      min = child_min_max.min;
+      max = child_min_max.max;
     }
 
     if (min < min_max.min) min_max.min = min;
@@ -153,3 +206,4 @@ int main(int argc, char **argv) {
   fflush(NULL);
   return 0;
 }
+
