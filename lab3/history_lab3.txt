@@ -7,8 +7,8 @@
     7  touch run_sequential_min_max.c
     8  make run_sequential_min_max
     9  ./run_sequential_min_max seed array_size
-   10  $ make run_sequential_min_max
-   11  $ ./run_sequential_min_max 12345 1000
+   10  make run_sequential_min_max
+   11  ./run_sequential_min_max 12345 1000
    12  make run_sequential_min_max
    13  ./run_sequential_min_max 12345 1000
    14  cd /workspaces/os_lab_2019/
