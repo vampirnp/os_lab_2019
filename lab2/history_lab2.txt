@@ -1,0 +1,37 @@
+    1  history
+    2  cd lab2/src/swap
+    3  gcc -o swap swap.c main.c
+    4  ./swap
+    5  gcc -o revert_string main.c revert_string.c
+    6  cd lab2/src/revert_string
+    7  cd /workspaces/os_lab_2019/lab2/src/revert_string
+    8  gcc -o revert_string main.c revert_string.c
+    9  ./revert_string "omon"
+   10  gcc -c revert_string.c -o revert_string.o
+   11  ar rcs librevert_string.a revert_string.o
+   12  gcc -c -fPIC revert_string.c -o revert_string.o
+   13  gcc -shared -o librevert_string.so revert_string.o
+   14  gcc main.c librevert_string.a -o static_app
+   15  ./static_app "string_to_revert"
+
+   
+   16  gcc main.c -L. -lrevert_string -o dynamic_app
+   17  LD_LIBRARY_PATH=. ./dynamic_app "string_to_revert"
+   18  LD_LIBRARY_PATH=. ./static_app  "string_to_revert"
+   19  sudo apt -y install libcunit1 libcunit1-doc libcunit1-dev
+   20  gcc tests.c -L. -lrevert_string -lcunit -o tests
+   21  cd lab2/src/tests
+   22  cd /workspaces/os_lab_2019/lab2/src/
+   23  cd tests
+   24  mv tests.c /workspaces/os_lab_2019/lab2/src/revert_string
+   25  gcc tests.c -L. -lrevert_string -lcunit -o tests
+   26  cd  /workspaces/os_lab_2019/lab2/src/revert_string
+   27  gcc tests.c -L. -lrevert_string -lcunit -o tests
+   28  sudo make install
+   29  cd  /workspaces/os_lab_2019/
+   30  ./update.sh
+   31  sudo apt -y install libcunit1 libcunit1-doc libcunit1-dev
+   32  cd  /workspaces/os_lab_2019/lab2/src/revert_string
+   33  gcc tests.c -L. -lrevert_string -lcunit -o tests
+   34  LD_LIBRARY_PATH=. ./tests
+   35  history > history_lab2.txt
