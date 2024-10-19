@@ -1,0 +1,65 @@
+    1  cd lab3/src
+    2  cp parallel_min_max.c ../../lab4/src/parallel_min_max.c
+    3  cp utils.c ../..lab4/src/utils.c
+    4  cp utils.c ../../lab4/src/utils.c
+    5  cp utils.h ../../lab4/src/utils.h
+    6  cp find_min_max.c ../../lab4/src/find_min_max.c
+    7  cp find_min_max.h ../../lab4/src/find_min_max.h
+    8  cd ../../lab4/src
+    9  gcc -c find_min_max.c -o find_min_max.o
+   10  gcc -c utils.c -o utils.o
+   11  gcc -o parallel_min_max parallel_min_max.c find_min_max.c utils.c
+   12  ./parallel_min_max
+   13  ./parallel_min_max --seed 123 --array_size 1000 --pnum 4 --timeout 10
+   14  ./parallel_min_max --seed 123 --array_size 1000 --pnum 4 --timeout 10 --by_files
+   15  nano zombie_demo.c
+   16  gcc -o zombie_demo zombie_demo.c
+   17  ./zombie_demo
+   18  gcc -Wno-format -o process_memory process_memory
+   19  gcc -Wno-format -o process_memory process_memory.c
+   20  ./process_memory
+   21  cp ../../lab3/src/makefile
+   22  cp ../../lab3/src/makefile lab4/src
+   23  cp ../../lab3/src
+   24  cd ../../lab3/src
+   25  cp makefile ../../lab4/src
+   26  cd ../../lab4/src
+   27  make
+   28  cd ../../lab3/src
+   29  cp sequential_min_max.c ../../lab4/src
+   30  cd ../../lab4/src
+   31  make
+   32  make all
+   33  make
+   34  cd ../../lab3/src
+   35  cp exec_sequential.c ../../lab4/src
+   36  cd ../../lab4/src
+   37  make all
+   38  make
+   39  make all
+   40  make
+   41  make clear
+   42  make clean
+   43  make all
+   44  make clean
+   45  make
+   46  nano sum_lib.h
+   47  nano sum_lib.c
+   48  gcc -o parallel_sum parallel_sum.c sum_lib.c utils.c -lpthread -Wall -Wno-format
+   49  ./psum --threads_num 4 --seed 42 --array_size 1000000
+   50  ./parallel_sum --threads_num 4 --seed 42 --array_size 1000000
+   51  mkdir num5
+   52  mv parallel_sum.c ./num5
+   53  mv parallel_sum ./num5
+   54  mv sum_lib.c sum_lib.h ./num5
+   55  cd num5
+   56  nano makefile
+   57  cd ..
+   58  cp utils.c utils.h ./num5/utils.c ./num5/utils.h
+   59  cp utils.c ./num5/utils.c
+   60  cp utils.h ./num5/utils.h
+   61  cd ./num5
+   62  make
+   63  history
+   64  cd ..
+   65  history > history_lab4.txt
