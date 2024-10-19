@@ -12,10 +12,10 @@
    12  ./parallel_min_max
    13  ./parallel_min_max --seed 123 --array_size 1000 --pnum 4 --timeout 10
    14  ./parallel_min_max --seed 123 --array_size 1000 --pnum 4 --timeout 10 --by_files
-   15  nano zombie_demo.c
-   16  gcc -o zombie_demo zombie_demo.c
+   15  touch zombie.c
+   16  gcc -o zombi zombie.c
    17  ./zombie_demo
-   18  gcc -Wno-format -o process_memory process_memory
+   18  gcc -Wno-format -o process_memory process_memory.c
    19  gcc -Wno-format -o process_memory process_memory.c
    20  ./process_memory
    21  cp ../../lab3/src/makefile
@@ -43,8 +43,8 @@
    43  make all
    44  make clean
    45  make
-   46  nano sum_lib.h
-   47  nano sum_lib.c
+   46  touch sum_lib.h
+   47  touch sum_lib.c
    48  gcc -o parallel_sum parallel_sum.c sum_lib.c utils.c -lpthread -Wall -Wno-format
    49  ./psum --threads_num 4 --seed 42 --array_size 1000000
    50  ./parallel_sum --threads_num 4 --seed 42 --array_size 1000000
@@ -53,13 +53,13 @@
    53  mv parallel_sum ./num5
    54  mv sum_lib.c sum_lib.h ./num5
    55  cd num5
-   56  nano makefile
+   56  touch makefile
    57  cd ..
    58  cp utils.c utils.h ./num5/utils.c ./num5/utils.h
    59  cp utils.c ./num5/utils.c
    60  cp utils.h ./num5/utils.h
    61  cd ./num5
    62  make
-   63  history
+   63  history > history_lab4.txt
    64  cd ..
    65  history > history_lab4.txt
