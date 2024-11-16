@@ -11,11 +11,11 @@ int main(int argc, char **argv) {
   }
 
   int seed = atoi(argv[1]);
-  if (seed <= 0) {
+  /*if (seed <= 0) {
     printf("seed is a positive number\n");
     return 1;
   }
-
+*/
   int array_size = atoi(argv[2]);
   if (array_size <= 0) {
     printf("array_size is a positive number\n");

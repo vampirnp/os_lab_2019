@@ -1,0 +1,38 @@
+    1  cd /workspaces/os_lab_2019/lab4/src
+    2  gcc -c find_min_max.c -o find_min_max.o
+    3  gcc -c utils.c -o utils.o
+    4  gcc -o parallel_min_max parallel_min_max.c find_min_max.c utils.c
+    5  ./parallel_min_max --seed 123 --array_size 1000 --pnum 4 --timeout 10
+    6  touch zombie.c
+    7  gcc -o zombie zombie.c
+    8  ./zombie
+    9  ps aux | grep Z
+   10  gcc -o process_memory process_memory.c
+   11  ./process_memory
+   12  make
+   13  gcc -o parallel_sum parallel_sum.c sum_lib.c utils.c -lpthread -Wall -Wno-format
+   14  make all
+   15  nano sum_lib.h
+   16  nano sum_lib.c
+   17  gcc -o parallel_sum parallel_sum.c sum_lib.c utils.c -lpthread -Wall -Wno-format
+   18  ./psum --threads_num 4 --seed 42 --array_size 1000000
+   19  ./parallel_sum --threads_num 4 --seed 42 --array_size 1000000
+   20  cd ./num5
+   21  make
+   22  mkdir num5
+   23  mv parallel_sum.c ./num5
+   24  cd /workspaces/os_lab_2019/lab4/src
+   25  mkdir num5
+   26  mv parallel_sum.c ./num5
+   27  mv parallel_sum ./num5
+   28  mv sum_lib.c sum_lib.h ./num5
+   29  cd num5
+   30  touch makefile
+   31  cd /workspaces/os_lab_2019/lab4/src
+   32  cp utils.c utils.h ./num5/utils.c ./num5/utils.h
+   33  cp utils.c ./num5/utils.c
+   34  cp utils.h ./num5/utils.h
+   35  cd ./num5
+   36  make
+   37  cd /workspaces/os_lab_2019/lab4/
+   38  history > history_lab4.txt
