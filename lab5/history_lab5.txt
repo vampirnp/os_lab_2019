@@ -1,0 +1,15 @@
+    1  cd lab5/src
+    2  gcc -o mutex mutex.c -lpthread
+    3  ./mutex
+    4  gcc -o factorial factorial.c -lpthread
+    5  ./factorial --k 10 --pnum 4 --mod 10
+    6  ./factorial --k 5 --pnum 2 --mod 100
+    7  gcc -o deadlock_demo deadlock_demo.c -lpthread
+    8  ./deadlock_demo
+    чтобы остановить deadlock жмем:"ctrl+c"
+    9  cd /workspaces/os_lab_2019
+   10  git add lab5/src/deadlock_demo.c
+   11  git add lab5/src/factorial.c
+   12  git add lab5/src/mutex.c
+   13  cd lab5
+   14  history > history_lab5.txt
