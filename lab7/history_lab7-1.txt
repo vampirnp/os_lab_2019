@@ -1,0 +1,4 @@
+    1  cd lab7/src
+    2  ./tcpclient 127.0.0.1 10050 100
+    3  ./udpclient 127.0.0.1 20001 1024
+    4  history > history_lab7-1.txt

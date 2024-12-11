@@ -1,0 +1,9 @@
+    1  cd lab7/src
+    2  touch Makefile
+    3  make
+    4  make clean
+    5  ./tcpserver 10050 100
+    6  make
+    7  ./tcpserver 10050 100
+    8  ./udpserver 20001 1024
+    9  history > history_lab7.txt
